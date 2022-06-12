@@ -12,7 +12,7 @@ impl Player {
         }
     }
 
-    pub fn render(&self, ctx: &mut BTerm, camera: &mut Camera) {
+    pub fn render(&self, ctx: &mut BTerm, camera: &Camera) {
         ctx.set(
             self.position.x - camera.left_x,
             self.position.y - camera.top_y,

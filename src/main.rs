@@ -42,9 +42,8 @@ impl GameState for State {
 
     fn tick(&mut self, ctx: &mut BTerm) {
         ctx.cls();
-        ctx.print(1, 1, "Hello World from Bracket-Lib");
         self.map.render(ctx, &self.camera);
-        self.player.render(ctx, &mut self.camera);
+        self.player.render(ctx, &self.camera);
         self.player.update(ctx, &self.map, &mut self.camera);
     }
 
