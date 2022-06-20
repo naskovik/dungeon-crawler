@@ -24,7 +24,7 @@ impl Player {
 
     pub fn update(&mut self, ctx: &mut BTerm, map: &Map, camera: &mut Camera) {
         if let Some(key) = ctx.key {
-            let delta = match key {
+            let delta : Point = match key {
                 VirtualKeyCode::Left => Point::new(-1, 0),
                 VirtualKeyCode::Right => Point::new(1, 0),
                 VirtualKeyCode::Up => Point::new(0, -1),
@@ -32,7 +32,7 @@ impl Player {
                 _ => Point::zero()
             };
 
-            let new_pos = self.position + delta;
+            let new_pos : Point = self.position + delta;
 
             if map.can_enter_tile(new_pos) {
                 self.position = new_pos;

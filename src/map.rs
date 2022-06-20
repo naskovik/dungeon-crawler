@@ -28,7 +28,7 @@ impl Map {
         for y in camera.top_y..camera.bottom_y {
             for x in camera.left_x..camera.right_x {
                 if self.in_bounds(Point::new(x, y)) {
-                    let idx = map_idx(x, y);
+                    let idx : usize = map_idx(x, y);
                     match self.tiles[idx] {
                         TileType::Floor => {
                             ctx.set(
