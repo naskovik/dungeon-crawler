@@ -37,7 +37,7 @@ impl MapBuilder {
                 rng.range(2, 10)
             );
 
-            let mut overlap = false;
+            let mut overlap : bool = false;
             // new room not over an existing room
             for r in self.rooms.iter() {
                 if r.intersect(&room) {
