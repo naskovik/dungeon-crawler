@@ -15,6 +15,7 @@ pub fn hud(ecs: &SubWorld) {
     draw_batch.target(2);
     draw_batch.print_centered(1,
     "Explore the dungeon. Cursor keys to move");
+
     draw_batch.bar_horizontal(
         Point::zero(),
         SCREEN_WIDTH * 2,
@@ -22,6 +23,7 @@ pub fn hud(ecs: &SubWorld) {
         player_health.max,
         ColorPair::new(RED, BLACK)
     );
+
     draw_batch.print_color_centered(
         0,
         format!(" Health: {} / {}",
