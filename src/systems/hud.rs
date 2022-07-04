@@ -31,4 +31,5 @@ pub fn hud(ecs: &SubWorld) {
             player_health.max),
         ColorPair::new(WHITE, RED)
     );
+    draw_batch.submit(10000).expect("Batch Error");
 }
