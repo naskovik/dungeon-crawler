@@ -1,4 +1,4 @@
-use crate::prelude::*;
+/*use crate::prelude::*;
 
 #[system]
 #[read_component(Point)]
@@ -19,4 +19,4 @@ pub fn collisions(ecs: &mut SubWorld, commands: &mut CommandBuffer) {
     .for_each(|(entity, _ )| {
         commands.remove(*entity);
     });
-}
+}*/

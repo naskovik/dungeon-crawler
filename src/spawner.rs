@@ -27,10 +27,11 @@ pub fn spawn_monster(
     pos: Point
 ) {
 
-    let (hp, name, glyph) = match rng.roll_dice(1,10) {
-        1..=8 => goblin(),
-        _ => orc(),
-    };
+    let (hp, name, glyph) =
+        match rng.roll_dice(1,10) {
+            1..=8 => goblin(),
+            _ => orc(),
+        };
 
     ecs.push(
         (   Enemy,
