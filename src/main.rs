@@ -1,3 +1,5 @@
+#![warn(clippy::pedantic)]
+
 mod map;
 mod map_builder;
 mod camera;
@@ -7,6 +9,9 @@ mod systems;
 mod turn_state;
 mod prelude {
     pub use bracket_lib::prelude::*;
+    pub use legion::*;
+    pub use legion::world::SubWorld;
+    pub use legion::systems::CommandBuffer;
     pub const SCREEN_WIDTH: i32 = 80;
     pub const SCREEN_HEIGHT: i32 = 50;
     pub const DISPLAY_WIDTH: i32 = SCREEN_WIDTH / 2;
@@ -18,9 +23,6 @@ mod prelude {
     pub use crate::spawner::*;
     pub use crate::systems::*;
     pub use crate::turn_state::*;
-    pub use legion::*;
-    pub use legion::world::SubWorld;
-    pub use legion::systems::CommandBuffer;
 }
 
 use prelude::*;
@@ -43,10 +45,10 @@ impl State {
         spawn_player(&mut ecs, map_builder.player_start);
         // ** spawn monsters
         map_builder.rooms
-        .iter()
-        .skip(1)
-        .map(|r| r.center())
-        .for_each(|pos| spawn_monster(&mut ecs, &mut rng, pos));
+            .iter()
+            .skip(1)
+            .map(|r| r.center())
+            .for_each(|pos| spawn_monster(&mut ecs, &mut rng, pos));
         // **
         resources.insert(map_builder.map);
         resources.insert(Camera::new(map_builder.player_start));
@@ -87,10 +89,16 @@ impl GameState for State {
                 &mut self.resources
             ),
             TurnState::PlayerTurn => {
-                self.player_systems.execute(&mut self.ecs, &mut self.resources);
+                self.player_systems.execute(
+                    &mut self.ecs,
+                    &mut self.resources
+                );
             },
             TurnState::MonsterTurn => {
-                self.monster_systems.execute(&mut self.ecs, &mut self.resources)
+                self.monster_systems.execute(
+                    &mut self.ecs,
+                    &mut self.resources
+                )
             }
         }
         render_draw_buffer(ctx).expect("Render Error");

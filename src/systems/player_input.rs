@@ -9,7 +9,7 @@ pub fn player_input(
     #[resource] key: &Option<VirtualKeyCode>,
     #[resource] turn_state: &mut TurnState
 ) {
-    if let Some(key) = key {
+    if let Some(key) = *key {
         let mut players =
             <(Entity, &Point)>::query()
             .filter(component::<Player>());
@@ -25,8 +25,11 @@ pub fn player_input(
         let (player_entity, destination) =
             players
             .iter(ecs)
-            .find_map(|(entity, pos)| Some((*entity, *pos + delta)))
+            .find_map(|(entity, pos)| {
+                Some((*entity, *pos + delta))
+            })
             .unwrap();
+
 
         let mut enemies =
             <(Entity, &Point)>::query()
@@ -48,15 +51,15 @@ pub fn player_input(
             });
 
             if !hit_something {
-                commands.push(((), WantsToMove { entity: player_entity, destination }));
+                commands.push((
+                    (),
+                    WantsToMove {
+                        entity: player_entity,
+                        destination
+                    }
+                ));
             }
-            *turn_state = TurnState::PlayerTurn;
-
-           /* players .iter(ecs)
-            .for_each(|(entity, pos)| {
-                let destination = *pos + delta;
-                commands.push(((), WantsToMove { entity: *entity, destination }));
-            });*/
         }
+        *turn_state = TurnState::PlayerTurn;
     }
 }
