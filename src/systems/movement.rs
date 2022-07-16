@@ -10,12 +10,9 @@ pub fn movement(
     ecs: &mut SubWorld,
     commands: &mut CommandBuffer
 ) {
-
     if map.can_enter_tile(want_move.destination) {
-        // the entity that wants to move moves to its destination
         commands.add_component(want_move.entity, want_move.destination);
 
-        // if the entity is a player, update camera information
         if ecs.entry_ref(want_move.entity)
             .unwrap()
             .get_component::<Player>().is_ok()
@@ -23,7 +20,6 @@ pub fn movement(
             camera.on_player_move(want_move.destination);
         }
     }
-    // remove old entity
     commands.remove(*entity);
-
 }
+
