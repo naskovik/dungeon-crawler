@@ -9,30 +9,25 @@ pub fn tooltips(
     #[resource] mouse_pos: &Point,
     #[resource] camera: &Camera
 ) {
-
     let mut positions = <(Entity, &Point, &Name)>::query();
     let offset = Point::new(camera.left_x, camera.top_y);
     let map_pos = *mouse_pos + offset;
-    let mut db = DrawBatch::new();
-    db.target(2);
-
+    let mut draw_batch = DrawBatch::new();
+    draw_batch.target(2);
     positions
         .iter(ecs)
-        .filter(|(_, pos, _)| **pos == map_pos)
-        .for_each(|(entity, _, name)| {
-
-            let screen_pos = *mouse_pos * 2;
-            let display =
-                if let Ok(health) = ecs.entry_ref(*entity)
+        .filter(|(_, pos, _)| **pos == map_pos )
+        .for_each(|(entity, _, name) | {
+            let screen_pos = *mouse_pos * 4;
+            let display = if let Ok(health) = ecs.entry_ref(*entity)
                 .unwrap()
-                .get_component::<Health>() {
-                    format!("{} : {} hp", &name.0, health.current)
-                }
-                else {
-                    name.0.clone()
-                };
-            db.print(screen_pos, &display);
+                .get_component::<Health>()
+            {
+                format!("{} : {} hp", &name.0, health.current)
+            } else {
+                name.0.clone()
+            };
+            draw_batch.print(screen_pos, &display);
         });
-    db.submit(10100).expect("Batch error");
-
+    draw_batch.submit(10100).expect("Batch error");
 }

@@ -1,10 +1,10 @@
 use crate::prelude::*;
 
 #[system]
-#[write_component(Point)]
+#[read_component(Point)]
 #[read_component(MovingRandomly)]
-#[read_component(Player)]
 #[read_component(Health)]
+#[read_component(Player)]
 pub fn random_move(ecs: &SubWorld, commands: &mut CommandBuffer) {
     let mut movers = <(Entity, &Point, &MovingRandomly)>::query();
     let mut positions = <(Entity, &Point, &Health)>::query();
