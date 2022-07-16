@@ -14,7 +14,7 @@ pub fn map_render(#[resource] map: &Map, #[resource] camera: &Camera) {
                     TileType::Floor => to_cp437('.'),
                     TileType::Wall => to_cp437('#'),
                 };
-                draw_batch.set(// (1)
+                draw_batch.set(
                     pt - offset,
                     ColorPair::new(
                         WHITE,
@@ -25,6 +25,6 @@ pub fn map_render(#[resource] map: &Map, #[resource] camera: &Camera) {
             }
         }
     }
-    draw_batch.submit(0).expect("Batch error");// (2)
+    draw_batch.submit(0).expect("Batch error");
 }
 

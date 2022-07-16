@@ -6,9 +6,9 @@ use crate::prelude::*;
 pub fn combat(ecs: &mut SubWorld, commands: &mut CommandBuffer) {
     let mut attackers = <(Entity, &WantsToAttack)>::query();
 
-    let victims : Vec<(Entity, Entity)> = attackers// (1)
+    let victims : Vec<(Entity, Entity)> = attackers
         .iter(ecs)
-        .map(|(entity, attack)| (*entity, attack.victim) )// (2)
+        .map(|(entity, attack)| (*entity, attack.victim) )
         .collect();// (3)
 
     victims.iter().for_each(|(message, victim)| {
