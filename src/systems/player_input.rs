@@ -34,7 +34,7 @@ pub fn player_input(
             <(Entity, &Point)>::query()
             .filter(component::<Enemy>());
         let mut did_something = false;
-        if delta.x !=0 || delta.y != 0 {
+        if delta.x != 0 || delta.y != 0 {
             let mut hit_something = false;
             enemies
                 .iter(ecs)
@@ -46,10 +46,13 @@ pub fn player_input(
                     did_something = true;
 
                     commands
-                        .push(((), WantsToAttack{
-                            attacker: player_entity,
-                            victim: *entity,
-                        }));
+                        .push((
+                            (),
+                            WantsToAttack{
+                                attacker: player_entity,
+                                victim: *entity,
+                            })
+                        );
                 });
 
             if !hit_something {
