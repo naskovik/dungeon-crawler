@@ -16,25 +16,40 @@ pub fn map_render(
     let player_fov = fov.iter(ecs).nth(0).unwrap();
     for y in camera.top_y ..= camera.bottom_y {
         for x in camera.left_x .. camera.right_x {
+
             let pt = Point::new(x, y);
             let offset = Point::new(camera.left_x, camera.top_y);
+            let idx = map_idx(x, y);
 
             if map.in_bounds(pt) &&
-                player_fov.visible_tiles.contains(&pt)
+                (player_fov.visible_tiles.contains(&pt) |
+                map.revealed_tiles[idx])
             {
-                let idx = map_idx(x, y);
-                let glyph = match map.tiles[idx] {
-                    TileType::Floor => to_cp437('.'),
-                    TileType::Wall => to_cp437('#'),
-                };
-                draw_batch.set(
-                    pt - offset,
-                    ColorPair::new(
-                        WHITE,
-                        BLACK
+                let tint =
+                    if player_fov.visible_tiles.contains(&pt) {
+                        WHITE
+                    }
+                    else {
+                        DARK_GREY
+                    };
+                match map.tiles[idx] {
+                    TileType::Floor => draw_batch.set(
+                            pt - offset,
+                            ColorPair::new(
+                                tint,
+                                BLACK
+                            ),
+                            to_cp437('.')
                     ),
-                    glyph
-                );
+                    TileType::Wall => draw_batch.set(
+                            pt - offset,
+                            ColorPair::new(
+                                tint,
+                                BLACK
+                            ),
+                            to_cp437('#')
+                    ),
+                };
             }
         }
     }

@@ -6,7 +6,7 @@ use crate::prelude::*;
 pub fn movement(
     entity: &Entity,
     want_move: &WantsToMove,
-    #[resource] map: &Map,
+    #[resource] map: &mut Map,
     #[resource] camera: &mut Camera,
     ecs: &mut SubWorld,
     commands: &mut CommandBuffer
@@ -16,10 +16,15 @@ pub fn movement(
             commands.add_component(
                 want_move.entity, fov.clone_dirty()
             );
+
+            if entry.get_component::<Player>().is_ok() {
+                camera.on_player_move(want_move.destination);
+                fov.visible_tiles.iter().for_each(|pos| {
+                    map.revealed_tiles[map_idx(pos.x, pos.y)] = true;
+                });
+            }
         }
-        if entry.get_component::<Player>().is_ok() {
-            camera.on_player_move(want_move.destination)
-        }
+
     }
     if map.can_enter_tile(want_move.destination) {
         commands.add_component(want_move.entity, want_move.destination);
