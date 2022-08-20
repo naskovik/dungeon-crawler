@@ -123,31 +123,18 @@ impl GameState for State {
                 .clone();
 
         match current_state {
-            TurnState::AwaitingInput => {
-                self.input_systems.execute(
-                    &mut self.ecs,
-                    &mut self.resources
-                );
-            }
-            TurnState::PlayerTurn => {
-                self.player_systems.execute(
-                    &mut self.ecs,
-                    &mut self.resources
-                );
-            }
-            TurnState::MonsterTurn => {
-                self.monster_systems.execute(
-                    &mut self.ecs,
-                    &mut self.resources
-                )
-            }
-            TurnState::GameOver => {
-                self.game_over(ctx)
-            }
-            TurnState::Victory => {
-                self.victory(ctx)
-            }
-        }
+
+            TurnState::AwaitingInput => self.input_systems.execute(
+                &mut self.ecs, &mut self.resources),
+            TurnState::PlayerTurn => self.player_systems.execute(
+                &mut self.ecs, &mut self.resources),
+            TurnState::MonsterTurn => self.monster_systems.execute(
+                &mut self.ecs, &mut self.resources),
+            TurnState::GameOver => self.game_over(ctx),
+            TurnState::Victory => self.victory(ctx)
+
+        };
+
         render_draw_buffer(ctx)
             .expect("Render error");
     }
