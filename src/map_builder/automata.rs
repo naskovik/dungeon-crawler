@@ -98,7 +98,7 @@ impl CellularAutomataArchitect {
 
                 {
                     ( idx,
-                        DistanceAlg::Pythagoras.distance2d (
+                        DistanceAlg::Pythagoras.distance2d(
                             center, map.index_to_point2d(idx))
                     )
                 }
