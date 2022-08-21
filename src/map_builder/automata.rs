@@ -25,13 +25,14 @@ impl MapArchitect for CellularAutomataArchitect {
         mb.player_start = start;
         mb.amulet_start = mb.find_most_distant();
 
-       mb
+        mb
 
     }
 
 }
 
 impl CellularAutomataArchitect {
+
     fn random_noise_map(
         &mut self,
         rng: &mut RandomNumberGenerator,
