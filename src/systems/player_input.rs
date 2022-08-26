@@ -123,13 +123,13 @@ pub fn player_input(
 
         if let Some(item_entity) = item_entity {
             commands.push(
-
-                (),
-                ActivateItem{
-                    used_by: player_entity,
-                    item: item_entity
-                }
-
+                (
+                    (),
+                    ActivateItem{
+                        used_by: player_entity,
+                        item: item_entity
+                    }
+                )
             );
         }
 
