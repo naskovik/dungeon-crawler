@@ -5,16 +5,15 @@ use crate::prelude::*;
 #[read_component(Player)]
 #[write_component(Health)]
 pub fn combat(ecs: &mut SubWorld, commands: &mut CommandBuffer) {
-
     let mut attackers = <(Entity, &WantsToAttack)>::query();
-    let victims : Vec<(Entity, Entity)> = attackers
+    let victims: Vec<(Entity, Entity)> = attackers
         .iter(ecs)
-        .map(|(entity, attack)| (*entity, attack.victim) )
+        .map(|(entity, attack)| (*entity, attack.victim))
         .collect();
 
     victims.iter().for_each(|(message, victim)| {
-        let is_player =
-            ecs.entry_ref(*victim)
+        let is_player = ecs
+            .entry_ref(*victim)
             .unwrap()
             .get_component::<Player>()
             .is_ok();
