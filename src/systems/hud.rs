@@ -52,9 +52,12 @@ pub fn hud(ecs: &SubWorld) {
     item_query
         .iter(ecs)
         .filter(|(_, _, carried)| carried.0 == player)
-        .for_each(|(_, name, _)| {
-            draw_batch.print(Point::new(3, y), format!("{} : {}", y - 2, &name.0));
-            y += 1;
+        .for_each(|(item, name, _)| {
+            let iitem = *item;
+            if iitem.item_type == ItemType::Usable {
+                draw_batch.print(Point::new(3, y), format!("{} : {}", y - 2, &name.0));
+                y += 1;
+            }
         });
 
     if y > 3 {

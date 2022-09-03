@@ -6,6 +6,7 @@ use std::collections::HashSet;
 use std::fs::File;
 
 #[derive(Clone, Deserialize, Debug, PartialEq)]
+// TODO distinguish equipment type
 pub enum EntityType {
     Enemy,
     Item,
@@ -14,6 +15,7 @@ pub enum EntityType {
 #[derive(Clone, Deserialize, Debug)]
 pub struct Template {
     pub entity_type: EntityType,
+    pub item_type: Option<ItemType>,
     pub levels: HashSet<usize>,
     pub frequency: i32,
     pub name: String,
@@ -76,7 +78,15 @@ impl Templates {
         ));
 
         match template.entity_type {
-            EntityType::Item => commands.add_component(entity, Item {}),
+            EntityType::Item => {
+                if let Some(item_t) = template.item_type {
+                    match item_t {
+                        ItemType::Equipment => commands.add_component(entity, Item { item_type: ItemType::Equipment }),
+                        ItemType::Usable => commands.add_component(entity, Item { item_type: ItemType::Usable }),
+                        _ => (),
+                    }
+                }
+            },
             EntityType::Enemy => {
                 commands.add_component(entity, Enemy {});
                 commands.add_component(entity, FieldOfView::new(6));

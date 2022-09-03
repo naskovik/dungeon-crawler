@@ -7,6 +7,7 @@ mod map_builder;
 mod spawner;
 mod systems;
 mod turn_state;
+mod item_type;
 
 mod prelude {
     pub use bracket_lib::prelude::*;
@@ -24,6 +25,7 @@ mod prelude {
     pub use crate::spawner::*;
     pub use crate::systems::*;
     pub use crate::turn_state::*;
+    pub use crate::item_type::*;
 }
 
 use prelude::*;

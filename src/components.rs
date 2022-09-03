@@ -43,7 +43,9 @@ pub struct Name(pub String);
 pub struct ChasingPlayer;
 
 #[derive(Clone, Copy, Debug, PartialEq)]
-pub struct Item;
+pub struct Item {
+    pub item_type: ItemType,
+}
 
 #[derive(Clone, Copy, Debug, PartialEq)]
 pub struct AmuletOfYala;

@@ -33,7 +33,7 @@ pub fn spawn_player(ecs: &mut World, pos: Point) {
 
 pub fn spawn_amulet_of_yala(ecs: &mut World, pos: Point) {
     ecs.push((
-        Item,
+        Item { item_type: ItemType::Amulet },
         AmuletOfYala,
         pos,
         Render {
