@@ -49,6 +49,7 @@ pub fn hud(ecs: &SubWorld) {
 
     let mut item_query = <(&Item, &Name, &Carried)>::query();
     let mut y = 3;
+    let mut w = 0;
     item_query
         .iter(ecs)
         .filter(|(_, _, carried)| carried.0 == player)
@@ -56,6 +57,9 @@ pub fn hud(ecs: &SubWorld) {
             if item.item_type == ItemType::Usable {
                 draw_batch.print(Point::new(3, y), format!("{} : {}", y - 2, &name.0));
                 y += 1;
+            } else if item.item_type == ItemType::Equipment {
+                w = 3;
+                draw_batch.print(Point::new(36, w), format!("{}", &name.0));
             }
         });
 
@@ -64,6 +68,14 @@ pub fn hud(ecs: &SubWorld) {
             Point::new(3, 2),
             "Items carried",
             ColorPair::new(YELLOW, BLACK),
+        );
+    }
+
+    if w > 0 {
+        draw_batch.print_color(
+            Point::new(36, 2),
+            "Current weapon",
+            ColorPair::new(YELLOW, BLACK)
         );
     }
 
