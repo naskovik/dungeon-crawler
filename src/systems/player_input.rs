@@ -122,7 +122,7 @@ pub fn player_input(
             .unwrap();
         let item_entity = <(Entity, &Item, &Carried)>::query()
             .iter(ecs)
-            .filter(|(_, _, carried)| carried.0 == player_entity)
+            .filter(|(_, item, carried)| carried.0 == player_entity && item.item_type == ItemType::Usable)
             .enumerate()
             .filter(|(item_count, (_, _, _))| *item_count == n)
             .find_map(|(_, (item_entity, _, _))| Some(*item_entity));
