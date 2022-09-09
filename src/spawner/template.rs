@@ -6,7 +6,6 @@ use std::collections::HashSet;
 use std::fs::File;
 
 #[derive(Clone, Deserialize, Debug, PartialEq)]
-// TODO distinguish equipment type
 pub enum EntityType {
     Enemy,
     Item,
